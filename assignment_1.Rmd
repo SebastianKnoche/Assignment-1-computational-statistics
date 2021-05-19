@@ -2,7 +2,7 @@
 title: "Data Analytics: Methoden und Programmierung"
 subtitle: "Assignment 1: computational statistics"
 author: "Themenfeld SoSe 2021 - Arbeitsgruppe"
-date: "2021-05-11"
+date: "`r format(file.info(R.home())$ctime, '%Y-%m-%d')`"
 output:
   html_document:
     keep_md: yes
@@ -45,18 +45,31 @@ Assume that each side is observed with equal probability. Compute (on a sheet of
 
 Now produce some code to simulate rolling the die. The computer should roll the die a few thousand times (e.g. 10000) and estimate the expectation and the variance from this simulation data. Write a function by completing this skeleton.
 
-```{r eval=FALSE}
+```{r code skeleton, eval=FALSE}
+sim_die <- function(n=10000){
+  #expectation/mean
+  e <-
+  #variance
+  v <-
+  return(c(e,v))
+}
+```
+
+```{r show completed function code, eval=FALSE}
 sim_die <- function(n=10000){
   tmp_die <- sample(1:6, n, replace = TRUE)
   #expectation/mean
   e <- sum(tmp_die)/n
   #variance
   v <- var(tmp_die)
-  return(c(e,v))
+  
+  tmp_vec <- c(e,v)
+  names(tmp_vec) <- c("expectation","variance")
+  return(tmp_vec)
 }
 ```
 
-```{r}
+```{r function call sim_die()}
 sim_die()
 ```
 
@@ -74,7 +87,7 @@ $$\begin{align*}
 
 Write a function that computes the average of 20 rolls several thousand times and estimates the expectation and the variance of $\overline{Y}$
 
-```{r}
+```{r function call sim_av20_die()}
 sim_av20_die()
 ```
 
@@ -90,10 +103,10 @@ In the following, you are asked to write several functions for carrying out this
 
 Write a function computing a single t-statistic. This function has two arguments:
 
-  1) `x`: vector having the realizations $x_{i} $.
+  1) `x`: vector having the realizations $x_{i}$.
   2) `mu0`: the value according to the null hypothesis
 
-```{r eval=FALSE}
+```{r compute a single t-statistic, echo=FALSE}
 #generate a vector of random variables
 x <- rnorm(1000,mean=10,sd=3)
 
@@ -103,6 +116,8 @@ tvalue
 ```
 
 [1]   21.67301
+
+$t_{ \hat{ \beta } } =$ `r tvalue`
 
 ### 2.2   Generating a matrix of random variables
 
@@ -116,15 +131,16 @@ Write a function `my.genSampleMatrix` that generates a matrix of random variable
 The function should create a matrix where *each row* is a particular sample. The number of rows is equal to
 `nReps`.
 
-```{r eval=FALSE}
+```{r echo=FALSE}
 #generate a matrix of random variables
 my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=5, mu=2, sigma=2)
 my.samMatrix
 ```
 
-             [,1]       [,2]        [,3]         [,4]       [,5]
-[1,]    0.9344014   1.360619    1.322071    2.5589608   1.151102
-[2,]   -0.2159358   5.358126    3.423067    0.6043203   6.037797
+n|1|2|3|4|5
+---|---|---|---|---|---
+1|`r my.samMatrix[1,1]`|`r my.samMatrix[1,2]`|`r my.samMatrix[1,3]`|`r my.samMatrix[1,4]`|`r my.samMatrix[1,5]`
+2|`r my.samMatrix[2,1]`|`r my.samMatrix[2,2]`|`r my.samMatrix[2,3]`|`r my.samMatrix[2,4]`|`r my.samMatrix[2,5]`
 
 ### 2.3   Vector of t-statistics
 
