@@ -47,7 +47,9 @@ sim_av20_die <- function(n=10000){
 
 #compute a single t statistic
 my.tstat <- function(x,mu0=8) {
-  return((mean(x) -mu0)/(sd(x)*sqrt(length(x))))
+  return(
+    (mean(x) - mu0)/sd(x)*sqrt(length(x))
+  )
 } #note H_0 is false here
 
 
