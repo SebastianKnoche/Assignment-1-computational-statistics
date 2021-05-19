@@ -2,7 +2,7 @@
 title: "Data Analytics: Methoden und Programmierung"
 subtitle: "Assignment 1: computational statistics"
 author: "Themenfeld SoSe 2021 - Arbeitsgruppe"
-date: "2021-04-30"
+date: "2021-04-06"
 output:
   html_document:
     keep_md: yes
@@ -77,7 +77,7 @@ sim_die()
 
 ```
 ## expectation    variance 
-##     3.51090     2.88717
+##     3.48690     2.91832
 ```
 
 ### 1.2   Variance of the mean
@@ -101,7 +101,7 @@ sim_av20_die()
 
 ```
 ## expectation    variance 
-##    3.498040    2.927942
+##    3.499575    2.914353
 ```
 
 ## 2    Hypothesis testing (12 Points)
@@ -121,12 +121,12 @@ Write a function computing a single t-statistic. This function has two arguments
 
 
 ```
-## [1] 0.01892807
+## [1] 21.64824
 ```
 
 [1]   21.67301
 
-$t_{ \hat{ \beta } } =$ 0.0189281
+$t_{ \hat{ \beta } } =$ 21.6482432
 
 ### 2.2   Generating a matrix of random variables
 
@@ -142,15 +142,15 @@ The function should create a matrix where *each row* is a particular sample. The
 
 
 ```
-##           [,1]     [,2]     [,3]      [,4]      [,5]
-## [1,] -3.281850 6.397064 7.574183 -3.390325  6.472418
-## [2,] -6.506811 2.282371 2.089800  2.978583 -2.704797
+##            [,1]       [,2]       [,3]     [,4]       [,5]
+## [1,] -0.1380351 -0.9701663 -0.4693836 2.884023 -0.1129069
+## [2,] -1.3960034  8.2674774 -6.6647839 8.930622  4.7230908
 ```
 
 n|1|2|3|4|5
 ---|---|---|---|---|---
-1|-3.2818497|6.3970636|7.5741829|-3.390325|6.4724183
-2|-6.5068105|2.2823709|2.0897996|2.9785832|-2.7047974
+1|-0.1380351|-0.9701663|-0.4693836|2.8840227|-0.1129069
+2|-1.3960034|8.2674774|-6.6647839|8.9306222|4.7230908
 
 ### 2.3   Vector of t-statistics
 
