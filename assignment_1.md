@@ -1,8 +1,8 @@
 ---
 title: "Data Analytics: Methoden und Programmierung"
 subtitle: "Assignment 1: computational statistics"
-author: "Themenfeld SS 2021 - Arbeitsgruppe"
-date: "2021-05-11"
+author: "Themenfeld SoSe 2021 - Arbeitsgruppe"
+date: "2021-04-30"
 output:
   html_document:
     keep_md: yes
@@ -47,7 +47,6 @@ Now produce some code to simulate rolling the die. The computer should roll the 
 
 ```r
 sim_die <- function(n=10000){
-  
   #expectation/mean
   e <-
   #variance
@@ -56,13 +55,54 @@ sim_die <- function(n=10000){
 }
 ```
 
+
+```r
+sim_die <- function(n=10000){
+  tmp_die <- sample(1:6, n, replace = TRUE)
+  #expectation/mean
+  e <- sum(tmp_die)/n
+  #variance
+  v <- var(tmp_die)
+  
+  tmp_vec <- c(e,v)
+  names(tmp_vec) <- c("expectation","variance")
+  return(tmp_vec)
+}
+```
+
+
+```r
+sim_die()
+```
+
+```
+## expectation    variance 
+##     3.51090     2.88717
+```
+
 ### 1.2   Variance of the mean
 
 Assume that you roll the die 20 times and then compute the average $(\overline{Y}=\frac{1}{n}\sum_{i}Y_{i})$ of the 20 values. This describes a new experiment and the average ($\overline{Y}$) is a new random variable. Compute (on a sheet of paper) the expectation and the variance of $\overline{Y}$
 
+$$\begin{align*}
+\mathrm{E}(\overline{Y}) & = Y_{1}\frac{1}{20}+Y_{2}\frac{1}{20}+...+Y_{19}\frac{1}{20}+Y_{20}\frac{1}{20}\\
+\\
+\mathrm{Var}(\overline{Y}) & = Y_{1}^{2}\frac{1}{20}+Y_{2}^{2}\frac{1}{20}+...+Y_{19}^{2}\frac{1}{20}+Y_{20}^{2}\frac{1}{20}-{E}(\overline{Y})^{2}\\
+\end{align*}$$
+
 #### 1.2.1    By simulation
 
 Write a function that computes the average of 20 rolls several thousand times and estimates the expectation and the variance of $\overline{Y}$
+
+
+```r
+sim_av20_die()
+```
+
+```
+## expectation    variance 
+##    3.498040    2.927942
+```
 
 ## 2    Hypothesis testing (12 Points)
 
@@ -76,20 +116,17 @@ In the following, you are asked to write several functions for carrying out this
 
 Write a function computing a single t-statistic. This function has two arguments:
 
-  1) `x`: vector having the realizations $x_{i} $.
+  1) `x`: vector having the realizations $x_{i}$.
   2) `mu0`: the value according to the null hypothesis
 
 
-```r
-#generate a vector of random variables
-x <- rnorm(1000,mean=10,sd=3)
-
-#compute a single t statistic
-tvalue <- my.tstat(x,mu0=8) #note H_0 is false here
-tvalue
+```
+## [1] 0.01892807
 ```
 
 [1]   21.67301
+
+$t_{ \hat{ \beta } } =$ 0.0189281
 
 ### 2.2   Generating a matrix of random variables
 
@@ -104,15 +141,16 @@ The function should create a matrix where *each row* is a particular sample. The
 `nReps`.
 
 
-```r
-#generate a matrix of random variables
-my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=5, mu=2, sigma=2)
-my.samMatrix
+```
+##           [,1]     [,2]     [,3]      [,4]      [,5]
+## [1,] -3.281850 6.397064 7.574183 -3.390325  6.472418
+## [2,] -6.506811 2.282371 2.089800  2.978583 -2.704797
 ```
 
-             [,1]       [,2]        [,3]         [,4]       [,5]
-[1,]    0.9344014   1.360619    1.322071    2.5589608   1.151102
-[2,]   -0.2159358   5.358126    3.423067    0.6043203   6.037797
+n|1|2|3|4|5
+---|---|---|---|---|---
+1|-3.2818497|6.3970636|7.5741829|-3.390325|6.4724183
+2|-6.5068105|2.2823709|2.0897996|2.9785832|-2.7047974
 
 ### 2.3   Vector of t-statistics
 

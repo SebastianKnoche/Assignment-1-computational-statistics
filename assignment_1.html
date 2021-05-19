@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Themenfeld SS 2021 - Arbeitsgruppe" />
+<meta name="author" content="Themenfeld SoSe 2021 - Arbeitsgruppe" />
 
-<meta name="date" content="2021-05-11" />
+<meta name="date" content="2021-04-30" />
 
 <title>Data Analytics: Methoden und Programmierung</title>
 
@@ -167,8 +167,8 @@ pre code {
 
 <h1 class="title toc-ignore">Data Analytics: Methoden und Programmierung</h1>
 <h3 class="subtitle">Assignment 1: computational statistics</h3>
-<h4 class="author">Themenfeld SS 2021 - Arbeitsgruppe</h4>
-<h4 class="date">2021-05-11</h4>
+<h4 class="author">Themenfeld SoSe 2021 - Arbeitsgruppe</h4>
+<h4 class="date">2021-04-30</h4>
 
 </div>
 
@@ -197,21 +197,42 @@ pre code {
 <h4>1.1.1 Expectation and variance by simulation</h4>
 <p>Now produce some code to simulate rolling the die. The computer should roll the die a few thousand times (e.g. 10000) and estimate the expectation and the variance from this simulation data. Write a function by completing this skeleton.</p>
 <pre class="r"><code>sim_die &lt;- function(n=10000){
-  
   #expectation/mean
   e &lt;-
   #variance
   v &lt;-
   return(c(e,v))
 }</code></pre>
+<pre class="r"><code>sim_die &lt;- function(n=10000){
+  tmp_die &lt;- sample(1:6, n, replace = TRUE)
+  #expectation/mean
+  e &lt;- sum(tmp_die)/n
+  #variance
+  v &lt;- var(tmp_die)
+  
+  tmp_vec &lt;- c(e,v)
+  names(tmp_vec) &lt;- c(&quot;expectation&quot;,&quot;variance&quot;)
+  return(tmp_vec)
+}</code></pre>
+<pre class="r"><code>sim_die()</code></pre>
+<pre><code>## expectation    variance 
+##     3.51090     2.88717</code></pre>
 </div>
 </div>
 <div id="variance-of-the-mean" class="section level3">
 <h3>1.2 Variance of the mean</h3>
 <p>Assume that you roll the die 20 times and then compute the average <span class="math inline">\((\overline{Y}=\frac{1}{n}\sum_{i}Y_{i})\)</span> of the 20 values. This describes a new experiment and the average (<span class="math inline">\(\overline{Y}\)</span>) is a new random variable. Compute (on a sheet of paper) the expectation and the variance of <span class="math inline">\(\overline{Y}\)</span></p>
+<p><span class="math display">\[\begin{align*}
+\mathrm{E}(\overline{Y}) &amp; = Y_{1}\frac{1}{20}+Y_{2}\frac{1}{20}+...+Y_{19}\frac{1}{20}+Y_{20}\frac{1}{20}\\
+\\
+\mathrm{Var}(\overline{Y}) &amp; = Y_{1}^{2}\frac{1}{20}+Y_{2}^{2}\frac{1}{20}+...+Y_{19}^{2}\frac{1}{20}+Y_{20}^{2}\frac{1}{20}-{E}(\overline{Y})^{2}\\
+\end{align*}\]</span></p>
 <div id="by-simulation" class="section level4">
 <h4>1.2.1 By simulation</h4>
 <p>Write a function that computes the average of 20 rolls several thousand times and estimates the expectation and the variance of <span class="math inline">\(\overline{Y}\)</span></p>
+<pre class="r"><code>sim_av20_die()</code></pre>
+<pre><code>## expectation    variance 
+##    3.498040    2.927942</code></pre>
 </div>
 </div>
 </div>
@@ -224,16 +245,12 @@ pre code {
 <h3>2.1 A single t-statistic</h3>
 <p>Write a function computing a single t-statistic. This function has two arguments:</p>
 <ol style="list-style-type: decimal">
-<li><code>x</code>: vector having the realizations $x_{i} $.</li>
+<li><code>x</code>: vector having the realizations <span class="math inline">\(x_{i}\)</span>.</li>
 <li><code>mu0</code>: the value according to the null hypothesis</li>
 </ol>
-<pre class="r"><code>#generate a vector of random variables
-x &lt;- rnorm(1000,mean=10,sd=3)
-
-#compute a single t statistic
-tvalue &lt;- my.tstat(x,mu0=8) #note H_0 is false here
-tvalue</code></pre>
+<pre><code>## [1] 0.01892807</code></pre>
 <p>[1] 21.67301</p>
+<p><span class="math inline">\(t_{ \hat{ \beta } } =\)</span> 0.0189281</p>
 </div>
 <div id="generating-a-matrix-of-random-variables" class="section level3">
 <h3>2.2 Generating a matrix of random variables</h3>
@@ -245,11 +262,39 @@ tvalue</code></pre>
 <li><code>sigma</code>: the true <span class="math inline">\(\sigma\)</span> of the population</li>
 </ol>
 <p>The function should create a matrix where <em>each row</em> is a particular sample. The number of rows is equal to <code>nReps</code>.</p>
-<pre class="r"><code>#generate a matrix of random variables
-my.samMatrix &lt;- my.genSampleMatrix(nReps=2, nSample=5, mu=2, sigma=2)
-my.samMatrix</code></pre>
-<pre><code>         [,1]       [,2]        [,3]         [,4]       [,5]</code></pre>
-<p>[1,] 0.9344014 1.360619 1.322071 2.5589608 1.151102 [2,] -0.2159358 5.358126 3.423067 0.6043203 6.037797</p>
+<pre><code>##           [,1]     [,2]     [,3]      [,4]      [,5]
+## [1,] -3.281850 6.397064 7.574183 -3.390325  6.472418
+## [2,] -6.506811 2.282371 2.089800  2.978583 -2.704797</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>n</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>-3.2818497</td>
+<td>6.3970636</td>
+<td>7.5741829</td>
+<td>-3.390325</td>
+<td>6.4724183</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>-6.5068105</td>
+<td>2.2823709</td>
+<td>2.0897996</td>
+<td>2.9785832</td>
+<td>-2.7047974</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="vector-of-t-statistics" class="section level3">
 <h3>2.3 Vector of t-statistics</h3>
