@@ -11,7 +11,7 @@
 
 <meta name="author" content="Themenfeld SoSe 2021 - Arbeitsgruppe" />
 
-<meta name="date" content="2021-04-06" />
+<meta name="date" content="2021-05-12" />
 
 <title>Data Analytics: Methoden und Programmierung</title>
 
@@ -168,7 +168,7 @@ pre code {
 <h1 class="title toc-ignore">Data Analytics: Methoden und Programmierung</h1>
 <h3 class="subtitle">Assignment 1: computational statistics</h3>
 <h4 class="author">Themenfeld SoSe 2021 - Arbeitsgruppe</h4>
-<h4 class="date">2021-04-06</h4>
+<h4 class="date">2021-05-12</h4>
 
 </div>
 
@@ -216,7 +216,7 @@ pre code {
 }</code></pre>
 <pre class="r"><code>sim_die()</code></pre>
 <pre><code>## expectation    variance 
-##     3.48690     2.91832</code></pre>
+##    3.468200    2.893878</code></pre>
 </div>
 </div>
 <div id="variance-of-the-mean" class="section level3">
@@ -232,7 +232,7 @@ pre code {
 <p>Write a function that computes the average of 20 rolls several thousand times and estimates the expectation and the variance of <span class="math inline">\(\overline{Y}\)</span></p>
 <pre class="r"><code>sim_av20_die()</code></pre>
 <pre><code>## expectation    variance 
-##    3.499575    2.914353</code></pre>
+##    3.495255    2.917958</code></pre>
 </div>
 </div>
 </div>
@@ -248,9 +248,9 @@ pre code {
 <li><code>x</code>: vector having the realizations <span class="math inline">\(x_{i}\)</span>.</li>
 <li><code>mu0</code>: the value according to the null hypothesis</li>
 </ol>
-<pre><code>## [1] 21.64824</code></pre>
+<pre><code>## [1] 20.83239</code></pre>
 <p>[1] 21.67301</p>
-<p><span class="math inline">\(t_{ \hat{ \beta } } =\)</span> 21.6482432</p>
+<p><span class="math inline">\(t_{ \hat{ \beta } } =\)</span> 20.8323904</p>
 </div>
 <div id="generating-a-matrix-of-random-variables" class="section level3">
 <h3>2.2 Generating a matrix of random variables</h3>
@@ -262,9 +262,9 @@ pre code {
 <li><code>sigma</code>: the true <span class="math inline">\(\sigma\)</span> of the population</li>
 </ol>
 <p>The function should create a matrix where <em>each row</em> is a particular sample. The number of rows is equal to <code>nReps</code>.</p>
-<pre><code>##            [,1]       [,2]       [,3]     [,4]       [,5]
-## [1,] -0.1380351 -0.9701663 -0.4693836 2.884023 -0.1129069
-## [2,] -1.3960034  8.2674774 -6.6647839 8.930622  4.7230908</code></pre>
+<pre><code>##            [,1]     [,2]       [,3]     [,4]      [,5]
+## [1,] -2.2300610 3.349818 -1.8912638 5.095365 -1.675946
+## [2,]  0.4555363 1.526264  0.9025953 5.594795  1.877323</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -279,19 +279,19 @@ pre code {
 <tbody>
 <tr class="odd">
 <td>1</td>
-<td>-0.1380351</td>
-<td>-0.9701663</td>
-<td>-0.4693836</td>
-<td>2.8840227</td>
-<td>-0.1129069</td>
+<td>-2.230061</td>
+<td>3.3498177</td>
+<td>-1.8912638</td>
+<td>5.0953647</td>
+<td>-1.6759458</td>
 </tr>
 <tr class="even">
 <td>2</td>
-<td>-1.3960034</td>
-<td>8.2674774</td>
-<td>-6.6647839</td>
-<td>8.9306222</td>
-<td>4.7230908</td>
+<td>0.4555363</td>
+<td>1.5262635</td>
+<td>0.9025953</td>
+<td>5.5947949</td>
+<td>1.8773232</td>
 </tr>
 </tbody>
 </table>

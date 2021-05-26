@@ -2,7 +2,7 @@
 title: "Data Analytics: Methoden und Programmierung"
 subtitle: "Assignment 1: computational statistics"
 author: "Themenfeld SoSe 2021 - Arbeitsgruppe"
-date: "`r format(file.info(R.home())$ctime, '%Y-%m-%d')`"
+date: "`r format(file.info(knitr::current_input(dir=FALSE))$atime, '%Y-%m-%d')`"
 output:
   html_document:
     keep_md: yes
