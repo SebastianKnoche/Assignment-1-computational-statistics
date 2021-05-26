@@ -138,8 +138,24 @@ my.computeTestDecisions <- function(my.samMatrix, threshold= rejectValue, mu0= 2
 # 6) `mu0`: (see above) the value corresponding to the null hypothesis $H_{0}$
 #now use the powervalue function to compute the probability of rejecting the null for various values
 
+
+
 #same as above. H_0 is true. Result should be equal to significance level
 #the precision can be increased by choosing a large nReps-value
+rejectValue <- qt(0.95,df=19)
+rejectValue
+
 my.powerValue <- function(nReps=10000,nSample=20,threshold = rejectValue, mu=2,sigma=2, mu0=2) {
-  #
+  matrix = my.genSampleMatrix(nReps, nSample, mu, sigma) ## creating the first matrix
+  rejectrate = my.computeTestDecisions(matrix, threshold,mu0,decision.vect = FALSE) ## We are computing the test decisions with our freshly made matrix
+  return(rejectrate)
 }
+## Testing my Power Value
+my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=2.0,sigma=2, mu0=2)
+
+## Creating muVect
+muVect = seq(2,4, by = 0.1)
+## Creating powerVect with a sapply function
+powerVect = sapply(muVect, function(x) my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=x,sigma=2, mu0=2))
+## Plotting powerVect and MuVect
+plot(y=powerVect,x=muVect,xlab=expression(mu[X]),ylab=expression(Pi(mu[X]) ), type="b" )
