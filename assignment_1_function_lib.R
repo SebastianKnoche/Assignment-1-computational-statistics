@@ -72,7 +72,7 @@ my.genSampleMatrix <- function(nReps=2, nSample=5, mu=2, sigma=2) {
   return(SampleMatrix) #Output Result
 }
 
-
+##
 # Write a function that accepts the matrix of random variables as an input
 # and computes a vector of t-statistics.
 # That is, it should compute the t-statistic for each sample in the matrix.
@@ -102,16 +102,25 @@ my.compute.tVector <- function(sampleMatrix=my.samMatrix, mu0=2) {
 # 3) `mu0`: the value according to the Null hypothesis.
 # 4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of Booleans indicating whether the t-statistic is larger than the critical value.)
 
-#compute rejection rate / estimate the probability of rejecting the null
-
-#use a significance level of 10 percent. recall this is one-sided testing.
-# rejectValue <- qt(0.9,df=19)
-# rejectValue
-
-my.computeTestDecisions <- function(my.samMatrix, threshold = rejectValue, mu0=2, decision.vect=TRUE) {
-  #
+#compute rejection rate / estimate the probability of rejecting the null at a significance level of 10%
+my.computeTestDecisions <- function(my.samMatrix, threshold= rejectValue, mu0= 2, decision.vect= FALSE){
+  #create vector with t-values for each sample
+  t_vector= apply(
+    my.samMatrix,
+    MARGIN = 1, #apply function by row (for each sample)
+    my.tstat, 
+    mu0 = mu0
+  )
+  #create boolean vector 
+  boolean.decisions= sapply(
+    t_vector, 
+    function(x) {x > rejectValue} #compare elements of t vector with reject value
+  )
+  #set function output according to decision.vect 
+  ifelse(decision.vect == FALSE, 
+         return(sum(boolean.decisions)/ length(boolean.decisions)), 
+         return(boolean.decisions))
 }
-
 
 # Now a write a wrapper function that computes the fraction of samples
 # where the t-statistic is larger than the critical value for *different values*
