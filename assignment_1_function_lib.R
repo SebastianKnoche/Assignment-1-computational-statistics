@@ -103,9 +103,6 @@ my.compute.tVector <- function(sampleMatrix=my.samMatrix, mu0=2) {
 # 4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of Booleans indicating whether the t-statistic is larger than the critical value.)
 
 #compute rejection rate / estimate the probability of rejecting the null at a significance level of 10%
-rejectValue <- qt(0.9,df=19)
-rejectValue
-
 my.computeTestDecisions <- function(my.samMatrix, threshold= rejectValue, mu0= 2, decision.vect= FALSE){
   #create vector with t-values for each sample
   t_vector= apply(
@@ -124,16 +121,6 @@ my.computeTestDecisions <- function(my.samMatrix, threshold= rejectValue, mu0= 2
          return(sum(boolean.decisions)/ length(boolean.decisions)), 
          return(boolean.decisions))
 }
-
-reject= my.computeTestDecisions(my.samMatrix, threshold= rejectValue, mu0=2, decision.vect= TRUE)
-reject
-
-#2.4.1 
-#Further Examples 
-my.samMatrix <- my.genSampleMatrix(nReps=20000, nSample=20, mu=2, sigma=3)
-
-reject= my.computeTestDecisions(my.samMatrix, threshold= rejectValue, mu0=2)
-reject
 
 # Now a write a wrapper function that computes the fraction of samples
 # where the t-statistic is larger than the critical value for *different values*
