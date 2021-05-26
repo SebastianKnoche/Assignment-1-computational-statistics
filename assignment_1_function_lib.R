@@ -106,9 +106,6 @@ my.compute.tVector <- function(sampleMatrix=my.samMatrix, mu0=2) {
 rejectValue <- qt(0.9,df=19)
 rejectValue
 
-
-my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=20, mu=2, sigma=3)
-
 my.computeTestDecisions <- function(my.samMatrix, threshold= rejectValue, mu0= 2, decision.vect= FALSE){
   #create vector with t-values for each sample
   t_vector= apply(
