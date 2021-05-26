@@ -1,7 +1,7 @@
 # Data Analytics: Methoden und Programmierung
 # Assignment 1: computational statistics
 # Themenfeld SS 2021 - Arbeitsgruppe
-# 2021-05-11
+# 2021-05-12
 
 # simulate rolling the die a few thousand times (e.g. 10000)
 # estimate the expectation and the variance from this simulation data
