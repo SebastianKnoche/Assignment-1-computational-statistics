@@ -32,13 +32,13 @@ Let $Y$ denote a discrete random variable describing rolling a usual die with si
 
 Assume that each side is observed with equal probability. Compute (on a sheet of paper) the expectation and the variance of the random variable $Y$. Insert your calculations and the answer as a comment into the R-File.
 
-> $$\begin{align*}
-\mathrm{E}(Y) & = 1\frac{1}{6}+2\frac{1}{6}+3\frac{1}{6}+4\frac{1}{6}+5\frac{1}{6}+6\frac{1}{6}\\
-\mathrm{E}(Y) & = 3.5\\
-\\
-\mathrm{Var}(Y) & = 1^{2}\frac{1}{6}+2^{2}\frac{1}{6}+3^{2}\frac{1}{6}+4^{2}\frac{1}{6}+5^{2}\frac{1}{6}+6^{2}\frac{1}{6}-3.5^{2}\\
-\mathrm{Var}(Y) & = \frac{35}{12} = 2.92\\
-\end{align*}$$
+> $\begin{align*}  
+\mathrm{E}(Y) & = 1\frac{1}{6}+2\frac{1}{6}+3\frac{1}{6}+4\frac{1}{6}+5\frac{1}{6}+6\frac{1}{6}\\  
+\mathrm{E}(Y) & = 3.5\\  
+\\  
+\mathrm{Var}(Y) & = 1^{2}\frac{1}{6}+2^{2}\frac{1}{6}+3^{2}\frac{1}{6}+4^{2}\frac{1}{6}+5^{2}\frac{1}{6}+6^{2}\frac{1}{6}-3.5^{2}\\  
+\mathrm{Var}(Y) & = \frac{35}{12} = 2.92\\  
+\end{align*}$  
 
 #### 1.1.1    Expectation and variance by simulation
 
@@ -71,38 +71,32 @@ sim_die <- function(n=10000){
 ```
 
 
-```r
-sim_die()
-```
 
-```
-## expectation    variance 
-##    3.468200    2.893878
-```
+> $\begin{align*}  
+\mathrm{E}(Y) & = 3.5031\\  
+\mathrm{Var}(Y) & = 2.9243\\  
+\end{align*}$  
 
 ### 1.2   Variance of the mean
 
 Assume that you roll the die 20 times and then compute the average $(\overline{Y}=\frac{1}{n}\sum_{i}Y_{i})$ of the 20 values. This describes a new experiment and the average ($\overline{Y}$) is a new random variable. Compute (on a sheet of paper) the expectation and the variance of $\overline{Y}$
 
-$$\begin{align*}
-\mathrm{E}(\overline{Y}) & = Y_{1}\frac{1}{20}+Y_{2}\frac{1}{20}+...+Y_{19}\frac{1}{20}+Y_{20}\frac{1}{20}\\
-\\
-\mathrm{Var}(\overline{Y}) & = Y_{1}^{2}\frac{1}{20}+Y_{2}^{2}\frac{1}{20}+...+Y_{19}^{2}\frac{1}{20}+Y_{20}^{2}\frac{1}{20}-{E}(\overline{Y})^{2}\\
-\end{align*}$$
+> $\begin{align*}  
+\mathrm{E}(\overline{Y}) & = Y_{1}\frac{1}{20}+Y_{2}\frac{1}{20}+...+Y_{19}\frac{1}{20}+Y_{20}\frac{1}{20}\\  
+\\  
+\mathrm{Var}(\overline{Y}) & = Y_{1}^{2}\frac{1}{20}+Y_{2}^{2}\frac{1}{20}+...+Y_{19}^{2}\frac{1}{20}+Y_{20}^{2}\frac{1}{20}-{E}(\overline{Y})^{2}\\  
+\end{align*}$  
 
 #### 1.2.1    By simulation
 
 Write a function that computes the average of 20 rolls several thousand times and estimates the expectation and the variance of $\overline{Y}$
 
 
-```r
-sim_av20_die()
-```
 
-```
-## expectation    variance 
-##    3.495255    2.917958
-```
+> $\begin{align*}  
+\mathrm{E}(\overline{Y}) & = 3.4974\\  
+\mathrm{Var}(\overline{Y}) & = 2.9253\\  
+\end{align*}$  
 
 ## 2    Hypothesis testing (12 Points)
 
@@ -120,13 +114,8 @@ Write a function computing a single t-statistic. This function has two arguments
   2) `mu0`: the value according to the null hypothesis
 
 
-```
-## [1] 20.83239
-```
 
-[1]   21.67301
-
-$t_{ \hat{ \beta } } =$ 20.8323904
+> $t_{ \hat{ \beta } } = 19.8619$
 
 ### 2.2   Generating a matrix of random variables
 
@@ -141,16 +130,15 @@ The function should create a matrix where *each row* is a particular sample. The
 `nReps`.
 
 
-```
-##            [,1]     [,2]       [,3]     [,4]      [,5]
-## [1,] -2.2300610 3.349818 -1.8912638 5.095365 -1.675946
-## [2,]  0.4555363 1.526264  0.9025953 5.594795  1.877323
-```
 
-n|1|2|3|4|5
----|---|---|---|---|---
-1|-2.230061|3.3498177|-1.8912638|5.0953647|-1.6759458
-2|0.4555363|1.5262635|0.9025953|5.5947949|1.8773232
+
+**Sample matrix:**
+
+>
+1|2|3|4|5  
+-|-|-|-|-  
+9.7754|0.1053|6.7522|4.3821|12.0942  
+8.8285|1.344|1.2938|1.3243|5.4253  
 
 ### 2.3   Vector of t-statistics
 
@@ -161,35 +149,17 @@ The arguments are:
 
   1) `sampleMatrix`: the matrix containing the samples.
   2) `mu0`: the value according to the Null hypothesis.
-  
-
-```r
-my.samMatrix
-```
-
-             [,1]       [,2]        [,3]         [,4]       [,5]
-[1,]    0.9344014   1.360619    1.322071    2.5589608   1.151102
-[2,]   -0.2159358   5.358126    3.423067    0.6043203   6.037797
 
 
-```r
-#compute vector of t stats
-tVector <- my.compute.tVector(sampleMatrix=my.samMatrix, mu0=2)
-tVector
-```
 
-[1]    -1.8851975   0.8359817
+> $\begin{align*}  
+t_{ \hat{ \beta_{ 1 } } } & = 2.211\\  
+t_{ \hat{ \beta_{ 2 } } } & = 1.0806\\  
+\end{align*}$  
 
 #### 2.3.1    Further example: the same function with a larger number of repetitions.
 
-
-```r
-my.samMatrix <- my.genSampleMatrix(nReps=40000, nSample=30, mu=2, sigma=2)
-
-#compute vector of t stats
-tVector <- my.compute.tVector(sampleMatrix=my.samMatrix, mu0=2)
-hist(tVector, probability = TRUE)
-```
+<img src="assignment_1_files/figure-html/further testing of my.compute.tVector()-1.png" style="display: block; margin: auto;" />
 
 ### 2.4   The decision problem
 
@@ -203,38 +173,26 @@ The arguments are:
   4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of Booleans indicating whether the t-statistic is larger than the critical value.)
 
 
-```r
-#compute rejection rate / estimate the probability of rejecting the null
-
-my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=20, mu=2, sigma=3)
-
-#use a significance level of 10 percent. recall this is one-sided testing.
-rejectValue <- qt(0.9,df=19)
-rejectValue
+```
+## [1] 1.327728
 ```
 
-[1]   1.327728
 
-
-```r
-reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0=2, decision.vect=TRUE)
-reject
+```
+## [1] FALSE FALSE
 ```
 
-[1]   FALSE   FALSE
+Nicht ablehnen.
+Nicht ablehnen.
 
 #### 2.4.1    Further example: the same function with a larger number of repetitions.
 
 This time we do not specify the argument `decision.vect`. Hence it takes the default value of `FALSE` and returns the fraction of samples where the t-statistic is larger than the critical value. We know that this fraction should be equal to our (significance) level $\alpha$ if the hypothesized $\mu_{0}$ is equal to the true $\mu_{X}$. By increasing the number of repetitions (`nReps`) we may improve the precision of the simulation.
 
 
-```r
-my.samMatrix <- my.genSampleMatrix(nReps=20000, nSample=20, mu=2, sigma=3)
-reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0=2)
-reject
 ```
-
-[1]   0.09975
+## [1] 0.10075
+```
 
 ### 2.5   Putting it all together.
 
@@ -250,31 +208,19 @@ The arguments are:
   6) `mu0`: (see above) the value corresponding to the null hypothesis $H_{0}$
 
 
-```r
-#now use the powervalue function to compute the probability of rejecting the null for various values
-
-#same as above. H_0 is true. Result should be equal to significance level
-#the precision can be increased by choosing a large nReps-value
-my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=2,sigma=2, mu0=2)
+```
+## [1] 0.1056
 ```
 
-[1]   0.1019
 
-
-```r
-#now H_0 is false
-my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=2.4,sigma=2, mu0=2)
+```
+## [1] 0.2013
 ```
 
-[1]   0.3452
 
-
-```r
-#now H_0 is false
-my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=2.6,sigma=2, mu0=2)
 ```
-
-[1]   0.5071
+## [1] 0.2655
+```
 
 #### 2.5.1    Plotting
 
@@ -284,7 +230,4 @@ Now we are done. We can compute the power of the t-test for various values of $\
 
 Compute the power of the t-test $\prod(\mu_{X})$ for $\mu_{X}=2.0, 2.1, 2.2, ...4.0$ and plot the results:
 
-
-```r
-plot(y=powerVect,x=muVect,xlab=expression(mu[X]),ylab=expression(Pi(mu[X]) ), type="b" )
-```
+<img src="assignment_1_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
