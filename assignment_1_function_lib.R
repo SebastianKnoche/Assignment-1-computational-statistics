@@ -5,17 +5,19 @@
 
 # simulate rolling the die a few thousand times (e.g. 10000)
 # estimate the expectation and the variance from this simulation data
-sim_die <- function(n=10000){
-  tmp_die <- sample(1:6, n, replace = TRUE)
-  #expectation/mean
-  e <- sum(tmp_die)/n
-  #variance
-  v <- var(tmp_die)
-  
-  tmp_vec <- c(e,v)
-  names(tmp_vec) <- c("expectation","variance")
-  return(tmp_vec)
-}
+
+# please find this function definition in the assignment_1.Rmd file
+# # sim_die <- function(n=10000){
+#   tmp_die <- sample(1:6, n, replace = TRUE)
+#   #expectation/mean
+#   e <- sum(tmp_die)/n
+#   #variance
+#   v <- var(tmp_die)
+#   
+#   tmp_vec <- c(e,v)
+#   names(tmp_vec) <- c("expectation","variance")
+#   return(tmp_vec)
+# }
 
 
 # compute the average of 20 rolls several thousand times
