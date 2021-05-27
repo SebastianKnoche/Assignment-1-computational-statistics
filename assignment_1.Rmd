@@ -10,9 +10,8 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, fig.align = "center")
-
 library(knitr)
+opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
 ```{r}
