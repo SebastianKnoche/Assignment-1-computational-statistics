@@ -2,7 +2,7 @@
 title: "Data Analytics: Methoden und Programmierung"
 subtitle: "Assignment 1: computational statistics"
 author: "Themenfeld SoSe 2021 - Arbeitsgruppe"
-date: "2021-05-12"
+date: "2021-05-27"
 output:
   html_document:
     keep_md: yes
@@ -12,9 +12,6 @@ output:
 
 
 
-```r
-source(file="assignment_1_function_lib.R")
-```
 
 This assignment serves two purposes. First, it will train your R programming skills, in particular writing your own functions. Second, it serves as an introduction to computational statistics (or: understanding statistics by simulation). The idea is to study well-known problems by simulation.
 
@@ -73,8 +70,8 @@ sim_die <- function(n=10000){
 
 
 > $\begin{align*}  
-\mathrm{E}(Y) & = 3.5031\\  
-\mathrm{Var}(Y) & = 2.9243\\  
+\mathrm{E}(Y) & = 3.4927\\  
+\mathrm{Var}(Y) & = 2.8908\\  
 \end{align*}$  
 
 ### 1.2   Variance of the mean
@@ -94,8 +91,8 @@ Write a function that computes the average of 20 rolls several thousand times an
 
 
 > $\begin{align*}  
-\mathrm{E}(\overline{Y}) & = 3.4974\\  
-\mathrm{Var}(\overline{Y}) & = 2.9253\\  
+\mathrm{E}(\overline{Y}) & = 3.4929\\  
+\mathrm{Var}(\overline{Y}) & = 2.9173\\  
 \end{align*}$  
 
 ## 2    Hypothesis testing (12 Points)
@@ -115,7 +112,7 @@ Write a function computing a single t-statistic. This function has two arguments
 
 
 
-> $t_{ \hat{ \beta } } = 19.8619$
+> $t_{ \hat{ \beta } } = 20.5451$
 
 ### 2.2   Generating a matrix of random variables
 
@@ -130,15 +127,13 @@ The function should create a matrix where *each row* is a particular sample. The
 `nReps`.
 
 
+Table: Sample matrix
 
+|    1     |     2     |     3     |    4     |     5     |
+|:--------:|:---------:|:---------:|:--------:|:---------:|
+| 5.504417 | 0.5665628 | -1.067474 | 3.568687 | -1.389920 |
+| 5.430934 | 6.4867662 | 4.507894  | 1.536001 | 3.077788  |
 
-**Sample matrix:**
-
->
-1|2|3|4|5  
--|-|-|-|-  
-9.7754|0.1053|6.7522|4.3821|12.0942  
-8.8285|1.344|1.2938|1.3243|5.4253  
 
 ### 2.3   Vector of t-statistics
 
@@ -153,8 +148,8 @@ The arguments are:
 
 
 > $\begin{align*}  
-t_{ \hat{ \beta_{ 1 } } } & = 2.211\\  
-t_{ \hat{ \beta_{ 2 } } } & = 1.0806\\  
+t_{ \hat{ \beta_{ 1 } } } & = -0.4194\\  
+t_{ \hat{ \beta_{ 2 } } } & = 2.533\\  
 \end{align*}$  
 
 #### 2.3.1    Further example: the same function with a larger number of repetitions.
@@ -191,7 +186,7 @@ This time we do not specify the argument `decision.vect`. Hence it takes the def
 
 
 ```
-## [1] 0.10075
+## [1] 0.1034
 ```
 
 ### 2.5   Putting it all together.
@@ -209,17 +204,17 @@ The arguments are:
 
 
 ```
-## [1] 0.1056
+## [1] 0.0957
 ```
 
 
 ```
-## [1] 0.2013
+## [1] 0.2047
 ```
 
 
 ```
-## [1] 0.2655
+## [1] 0.2729
 ```
 
 #### 2.5.1    Plotting
