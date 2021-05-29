@@ -143,7 +143,7 @@ The function should create a matrix where *each row* is a particular sample. The
 #generate a matrix of random variables
 my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=5, mu=2, sigma=2)
 
-kable(my.samMatrix,col.names = colnames(my.samMatrix), align = "c", caption = "Sample matrix" )
+kable(my.samMatrix, col.names = colnames(my.samMatrix), align = "c", caption = "Sample matrix" )
 ```
 
 
@@ -162,9 +162,7 @@ The arguments are:
 tVector <- my.compute.tVector(sampleMatrix=my.samMatrix, mu0=2)
 ```
 
-> $\begin{align*}  
-t_{ \hat{ \beta_{ 1 } } } & = `r round(tVector[1], 4)`\\  
-t_{ \hat{ \beta_{ 2 } } } & = `r round(tVector[2], 4)`\\  
+> $\begin{align*}  `r paste0(paste0("t_{ \\hat{ \\beta_{", names(tVector), "} } } & = "), paste0(round(tVector[names(tVector)], 4)), collapse="\\\\")`  
 \end{align*}$  
 
 #### 2.3.1    Further example: the same function with a larger number of repetitions.
@@ -194,7 +192,6 @@ my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=20, mu=2, sigma=3)
 
 #use a significance level of 10 percent. recall this is one-sided testing.
 rejectValue <- qt(0.9,df=19)
-rejectValue
 ```
 
 ```{r}
@@ -202,8 +199,8 @@ reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0=2, 
 reject
 ```
 
-`r ifelse(reject[1], paste0("Ablehnen!"), paste0("Nicht ablehnen."))`
-`r ifelse(reject[2], paste0("Ablehnen!"), paste0("Nicht ablehnen."))`
+`r ifelse(is.logical(reject), ifelse(reject[1], paste0("Ablehnen!"), paste0("Nicht ablehnen.")), paste(reject))`
+`r if(is.logical(reject)) ifelse(reject[2], paste0("Ablehnen!"), paste0("Nicht ablehnen."))`
 
 #### 2.4.1    Further example: the same function with a larger number of repetitions.
 
@@ -214,6 +211,9 @@ my.samMatrix <- my.genSampleMatrix(nReps=20000, nSample=20, mu=2, sigma=3)
 reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0=2)
 reject
 ```
+
+`r ifelse(is.logical(reject), ifelse(reject[1], paste0("Ablehnen!"), paste0("Nicht ablehnen.")), paste(reject))`
+`r if(is.logical(reject)) ifelse(reject[2], paste0("Ablehnen!"), paste0("Nicht ablehnen."))`
 
 ### 2.5   Putting it all together.
 

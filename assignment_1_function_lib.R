@@ -69,6 +69,7 @@ my.tstat <- function(x,mu0=8) {
 my.genSampleMatrix <- function(nReps=2, nSample=5, mu=2, sigma=2) {
   SampleMatrix <- matrix(nrow = nReps,ncol=nSample,byrow = TRUE) #Create Empty Matrix with nReps Rows and nSize Columns
   colnames(SampleMatrix) <- c(1:nSample)
+  rownames(SampleMatrix) <- c(1:nReps)
   for (row in seq(nrow(SampleMatrix))){ 
     SampleMatrix[row,] <- rnorm(nSample,mean = mu,sd=sigma^2) #Fill out Matrix by Row with each sample
   }
@@ -111,13 +112,13 @@ my.computeTestDecisions <- function(sampleMatrix, threshold, mu0= 2, decision.ve
   t_vector <- my.compute.tVector(sampleMatrix = sampleMatrix, mu0 = mu0)
 
   #create boolean vector 
-  boolean.decisions= sapply(
+  boolean.decisions <- sapply(
     t_vector, 
-    function(x) {x > rejectValue} #compare elements of t vector with reject value
+    function(x) {x > threshold} #compare elements of t vector with the critical value
   )
   #set function output according to decision.vect 
   ifelse(decision.vect == FALSE, 
-         return(sum(boolean.decisions)/ length(boolean.decisions)), 
+         return(mean(boolean.decisions)), 
          return(boolean.decisions)
          )
 }
