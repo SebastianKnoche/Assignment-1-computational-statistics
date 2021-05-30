@@ -6,26 +6,26 @@
 # simulate rolling the die a few thousand times (e.g. 10000)
 # estimate the expectation and the variance from this simulation data
 
-# please find this function definition in the assignment_1.Rmd file
-# # sim_die <- function(n=10000){
-#   tmp_die <- sample(1:6, n, replace = TRUE)
-#   #expectation/mean
-#   e <- sum(tmp_die)/n
-#   #variance
-#   v <- var(tmp_die)
-#   
-#   tmp_vec <- c(e,v)
-#   names(tmp_vec) <- c("expectation","variance")
-#   return(tmp_vec)
-# }
+
+sim_die <- function(n = 10000) {
+  tmp_die <- sample(1:6, n, replace = TRUE)
+  #expectation/mean
+  e <- sum(tmp_die)/n
+  #variance
+  v <- var(tmp_die)
+
+  tmp_vec <- c(e, v)
+  names(tmp_vec) <- c("expectation", "variance")
+  return(tmp_vec)
+}
 
 
 # compute the average of 20 rolls several thousand times
 # and estimates the expectation and the variance of $\overline{Y}$
-sim_av20_die <- function(n=10000){
+sim_av20_die <- function(n = 10000){
   tmp_e <- c()
   tmp_v <- c()
-  for(i in 1:n){
+  for (i in 1:n) {
     tmp_die <- sim_die(20)
     tmp_e[i] <- tmp_die[1]
     tmp_v[i] <- tmp_die[2]
@@ -35,8 +35,8 @@ sim_av20_die <- function(n=10000){
   #variance
   v <- sum(tmp_v)/n
   
-  tmp_vec <- c(e,v)
-  names(tmp_vec) <- c("expectation","variance")
+  tmp_vec <- c(e, v)
+  names(tmp_vec) <- c("expectation", "variance")
   return(tmp_vec)
 }
   
@@ -48,8 +48,8 @@ sim_av20_die <- function(n=10000){
 # x <- rnorm(1000,mean=10,sd=3)
 
 #compute a single t statistic
-my.tstat <- function(x,mu0=8) {
-  tmp_t_value <- (mean(x) - mu0)/sd(x)*sqrt(length(x))
+my.tstat <- function(x, mu0 = 8) {
+  tmp_t_value <- (mean(x) - mu0) / sd(x) * sqrt(length(x))
   names(tmp_t_value) <- c("t-Value")
   return(tmp_t_value)
 } #note H_0 is false here
@@ -66,12 +66,12 @@ my.tstat <- function(x,mu0=8) {
 # The number of rows is equal to `nReps`.
 
 #generate a matrix of random variables
-my.genSampleMatrix <- function(nReps=2, nSample=5, mu=2, sigma=2) {
-  SampleMatrix <- matrix(nrow = nReps,ncol=nSample,byrow = TRUE) #Create Empty Matrix with nReps Rows and nSize Columns
+my.genSampleMatrix <- function(nReps = 2, nSample = 5, mu = 2, sigma = 2) {
+  SampleMatrix <- matrix(nrow = nReps, ncol = nSample, byrow = TRUE) #Create Empty Matrix with nReps Rows and nSize Columns
   colnames(SampleMatrix) <- c(1:nSample)
   rownames(SampleMatrix) <- c(1:nReps)
-  for (row in seq(nrow(SampleMatrix))){ 
-    SampleMatrix[row,] <- rnorm(nSample,mean = mu,sd=sigma^2) #Fill out Matrix by Row with each sample
+  for (row in seq(nrow(SampleMatrix))) { 
+    SampleMatrix[row,] <- rnorm(nSample,mean = mu,sd = sigma^2) #Fill out Matrix by Row with each sample
   }
   return(SampleMatrix) #Output Result
 }
@@ -87,7 +87,7 @@ my.genSampleMatrix <- function(nReps=2, nSample=5, mu=2, sigma=2) {
 # 2) `mu0`: the value according to the Null hypothesis.
 
 #compute vector of t stats
-my.compute.tVector <- function(sampleMatrix, mu0=2) {
+my.compute.tVector <- function(sampleMatrix, mu0 = 2) {
      apply(
        sampleMatrix, # Matrix to apply
        MARGIN = 1, #Set to apply by row
@@ -107,7 +107,7 @@ my.compute.tVector <- function(sampleMatrix, mu0=2) {
 # 4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of Booleans indicating whether the t-statistic is larger than the critical value.)
 
 #compute rejection rate / estimate the probability of rejecting the null at a significance level of 10%
-my.computeTestDecisions <- function(sampleMatrix, threshold, mu0= 2, decision.vect= FALSE){
+my.computeTestDecisions <- function(sampleMatrix, threshold, mu0= 2, decision.vect= FALSE) {
   #create vector with t-values for each sample
   t_vector <- my.compute.tVector(sampleMatrix = sampleMatrix, mu0 = mu0)
 
@@ -139,8 +139,8 @@ my.computeTestDecisions <- function(sampleMatrix, threshold, mu0= 2, decision.ve
 # 6) `mu0`: (see above) the value corresponding to the null hypothesis $H_{0}$
 #now use the powervalue function to compute the probability of rejecting the null for various values
 
-my.powerValue <- function(nReps=10000,nSample=20,threshold = rejectValue, mu=2,sigma=2, mu0=2) {
-  matrix = my.genSampleMatrix(nReps, nSample, mu, sigma) ## creating the first matrix
-  rejectrate = my.computeTestDecisions(matrix, threshold,mu0,decision.vect = FALSE) ## We are computing the test decisions with our freshly made matrix
+my.powerValue <- function(nReps = 10000, nSample = 20, threshold, mu = 2, sigma = 2, mu0 = 2) {
+  matrix <- my.genSampleMatrix(nReps, nSample, mu, sigma) ## creating the first matrix
+  rejectrate <- my.computeTestDecisions(matrix, threshold,mu0,decision.vect = FALSE) ## We are computing the test decisions with our freshly made matrix
   return(rejectrate)
 }
