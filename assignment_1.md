@@ -2,7 +2,7 @@
 title: "Data Analytics: Methoden und Programmierung"
 subtitle: "Assignment 1: computational statistics"
 author: "Themenfeld SoSe 2021 - Arbeitsgruppe"
-date: "2021-05-27"
+date: "2021-05-12"
 output:
   html_document:
     keep_md: yes
@@ -54,15 +54,15 @@ sim_die <- function(n=10000){
 
 
 ```r
-sim_die <- function(n=10000){
+sim_die <- function(n = 10000){
   tmp_die <- sample(1:6, n, replace = TRUE)
   #expectation/mean
   e <- sum(tmp_die)/n
   #variance
   v <- var(tmp_die)
   
-  tmp_vec <- c(e,v)
-  names(tmp_vec) <- c("expectation","variance")
+  tmp_vec <- c(e, v)
+  names(tmp_vec) <- c("expectation", "variance")
   return(tmp_vec)
 }
 ```
@@ -70,8 +70,8 @@ sim_die <- function(n=10000){
 
 
 > $\begin{align*}  
-\mathrm{E}(Y) & = 3.4927\\  
-\mathrm{Var}(Y) & = 2.8908\\  
+\mathrm{E}(Y) & = 3.5237\\  
+\mathrm{Var}(Y) & = 2.8989\\  
 \end{align*}$  
 
 ### 1.2   Variance of the mean
@@ -91,8 +91,8 @@ Write a function that computes the average of 20 rolls several thousand times an
 
 
 > $\begin{align*}  
-\mathrm{E}(\overline{Y}) & = 3.4929\\  
-\mathrm{Var}(\overline{Y}) & = 2.9173\\  
+\mathrm{E}(\overline{Y}) & = 3.4982\\  
+\mathrm{Var}(\overline{Y}) & = 2.9142\\  
 \end{align*}$  
 
 ## 2    Hypothesis testing (12 Points)
@@ -112,7 +112,7 @@ Write a function computing a single t-statistic. This function has two arguments
 
 
 
-> $t_{ \hat{ \beta } } = 20.5451$
+> $t = 17.8176$
 
 ### 2.2   Generating a matrix of random variables
 
@@ -129,10 +129,10 @@ The function should create a matrix where *each row* is a particular sample. The
 
 Table: Sample matrix
 
-|    1     |     2     |     3     |    4     |     5     |
-|:--------:|:---------:|:---------:|:--------:|:---------:|
-| 5.504417 | 0.5665628 | -1.067474 | 3.568687 | -1.389920 |
-| 5.430934 | 6.4867662 | 4.507894  | 1.536001 | 3.077788  |
+|    1     |     2     |     3      |     4     |     5     |
+|:--------:|:---------:|:----------:|:---------:|:---------:|
+| 7.183282 | -1.509153 | 0.6517722  | -1.457798 | -1.722433 |
+| 7.959834 | -1.169107 | -0.0562633 | 8.264322  | 2.060400  |
 
 
 ### 2.3   Vector of t-statistics
@@ -147,9 +147,7 @@ The arguments are:
 
 
 
-> $\begin{align*}  
-t_{ \hat{ \beta_{ 1 } } } & = -0.4194\\  
-t_{ \hat{ \beta_{ 2 } } } & = 2.533\\  
+> $\begin{align*}  t_{ 1 } & = -0.8091\\  t_{ 2 } & = 0.7101  
 \end{align*}$  
 
 #### 2.3.1    Further example: the same function with a larger number of repetitions.
@@ -165,28 +163,37 @@ The arguments are:
   1) `my.samMatrix`: the matrix containing the samples.
   2) `threshold`: the critical value. After choosing a (significance) level of α we can use a table showing the t-distribution to read off this value.
   3) `mu0`: the value according to the Null hypothesis.
-  4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of Booleans indicating whether the t-statistic is larger than the critical value.)
+  4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of booleans indicating whether the t-statistic is larger than the critical value.)
 
 
 ```
-## [1] 1.327728
+## [1] "critical value: 1.3277282090268"
 ```
 
 
-```
-## [1] FALSE FALSE
+```r
+reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0 = 2, decision.vect = TRUE)
+reject
 ```
 
-Nicht ablehnen.
-Nicht ablehnen.
+```
+##     1     2 
+## FALSE FALSE
+```
 
 #### 2.4.1    Further example: the same function with a larger number of repetitions.
 
 This time we do not specify the argument `decision.vect`. Hence it takes the default value of `FALSE` and returns the fraction of samples where the t-statistic is larger than the critical value. We know that this fraction should be equal to our (significance) level $\alpha$ if the hypothesized $\mu_{0}$ is equal to the true $\mu_{X}$. By increasing the number of repetitions (`nReps`) we may improve the precision of the simulation.
 
 
+```r
+my.samMatrix <- my.genSampleMatrix(nReps = 20000, nSample = 20, mu = 2, sigma = 3)
+reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0 = 2)
+reject
 ```
-## [1] 0.1034
+
+```
+## [1] 0.0996
 ```
 
 ### 2.5   Putting it all together.
@@ -203,18 +210,36 @@ The arguments are:
   6) `mu0`: (see above) the value corresponding to the null hypothesis $H_{0}$
 
 
+```r
+#now use the powervalue function to compute the probability of rejecting the null for various values
+
+#same as above. H_0 is true. Result should be equal to significance level
+#the precision can be increased by choosing a large nReps-value
+my.powerValue(nReps = 10000, nSample = 20, threshold = rejectValue, mu = 2, sigma = 2, mu0 = 2)
 ```
-## [1] 0.0957
+
+```
+## [1] 0.1015
 ```
 
 
+```r
+# #now H_0 is false
+my.powerValue(nReps = 10000, nSample = 20, threshold = rejectValue, mu = 2.4, sigma = 2, mu0 = 2)
 ```
-## [1] 0.2047
+
+```
+## [1] 0.1988
 ```
 
 
+```r
+#now H_0 is false
+my.powerValue(nReps = 10000, nSample = 20, threshold = rejectValue, mu = 2.6, sigma = 2, mu0 = 2)
 ```
-## [1] 0.2729
+
+```
+## [1] 0.2678
 ```
 
 #### 2.5.1    Plotting
@@ -225,4 +250,4 @@ Now we are done. We can compute the power of the t-test for various values of $\
 
 Compute the power of the t-test $\prod(\mu_{X})$ for $\mu_{X}=2.0, 2.1, 2.2, ...4.0$ and plot the results:
 
-<img src="assignment_1_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="assignment_1_files/figure-html/plotting the power of the t-test-1.png" style="display: block; margin: auto;" />
