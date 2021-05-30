@@ -1,7 +1,7 @@
 ---
 title: "Data Analytics: Methoden und Programmierung"
 subtitle: "Assignment 1: computational statistics"
-author: "Themenfeld SoSe 2021 - Arbeitsgruppe"
+author: "Themenfeld SoSe 2021 - Arbeitsgruppe: GENZEL KNOCHE LIU MOLITOR NAMAZI"
 date: "`r format(file.info(knitr::current_input(dir=FALSE))$atime, '%Y-%m-%d')`"
 output:
   html_document:
