@@ -15,7 +15,7 @@ opts_chunk$set(echo = FALSE, fig.align = "center")
 ```
 
 ```{r}
-source(file="assignment_1_function_lib.R")
+source(file = "assignment_1_function_lib.R")
 ```
 
 This assignment serves two purposes. First, it will train your R programming skills, in particular writing your own functions. Second, it serves as an introduction to computational statistics (or: understanding statistics by simulation). The idea is to study well-known problems by simulation.
@@ -57,15 +57,15 @@ sim_die <- function(n=10000){
 ```
 
 ```{r show completed function code, echo=TRUE}
-sim_die <- function(n=10000){
+sim_die <- function(n = 10000){
   tmp_die <- sample(1:6, n, replace = TRUE)
   #expectation/mean
   e <- sum(tmp_die)/n
   #variance
   v <- var(tmp_die)
   
-  tmp_vec <- c(e,v)
-  names(tmp_vec) <- c("expectation","variance")
+  tmp_vec <- c(e, v)
+  names(tmp_vec) <- c("expectation", "variance")
   return(tmp_vec)
 }
 ```
@@ -119,13 +119,13 @@ Write a function computing a single t-statistic. This function has two arguments
 
 ```{r compute a single t-statistic}
 #generate a vector of random variables
-x <- rnorm(1000,mean=10,sd=3)
+x <- rnorm(1000, mean = 10, sd = 3)
 
 #compute a single t statistic
-tvalue <- my.tstat(x,mu0=8) #note H_0 is false here
+tvalue <- my.tstat(x, mu0 = 8) #note H_0 is false here
 ```
 
-> $t_{ \hat{ \beta } } = `r round(tvalue, 4)`$
+> $t = `r round(tvalue, 4)`$
 
 ### 2.2   Generating a matrix of random variables
 
@@ -141,7 +141,7 @@ The function should create a matrix where *each row* is a particular sample. The
 
 ```{r function call my.genSampleMatrix()}
 #generate a matrix of random variables
-my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=5, mu=2, sigma=2)
+my.samMatrix <- my.genSampleMatrix(nReps = 2, nSample = 5, mu = 2, sigma = 2)
 
 kable(my.samMatrix, col.names = colnames(my.samMatrix), align = "c", caption = "Sample matrix" )
 ```
@@ -159,19 +159,19 @@ The arguments are:
 
 ```{r function call my.compute.tVector()}
 #compute vector of t stats
-tVector <- my.compute.tVector(sampleMatrix=my.samMatrix, mu0=2)
+tVector <- my.compute.tVector(sampleMatrix = my.samMatrix, mu0 = 2)
 ```
 
-> $\begin{align*}  `r paste0(paste0("t_{ \\hat{ \\beta_{", names(tVector), "} } } & = "), paste0(round(tVector[names(tVector)], 4)), collapse="\\\\")`  
+> $\begin{align*}  `r paste0(paste0("t_{ ", names(tVector), " } & = "), paste0(round(tVector[names(tVector)], 4)), collapse="\\\\  ")`  
 \end{align*}$  
 
 #### 2.3.1    Further example: the same function with a larger number of repetitions.
 
 ```{r further testing of my.compute.tVector()}
-my.samMatrix <- my.genSampleMatrix(nReps=40000, nSample=30, mu=2, sigma=2)
+my.samMatrix <- my.genSampleMatrix(nReps = 40000, nSample = 30, mu = 2, sigma = 2)
 
 #compute vector of t stats
-tVector <- my.compute.tVector(sampleMatrix=my.samMatrix, mu0=2)
+tVector <- my.compute.tVector(sampleMatrix = my.samMatrix, mu0 = 2)
 hist(tVector, probability = TRUE)
 ```
 
@@ -184,36 +184,31 @@ The arguments are:
   1) `my.samMatrix`: the matrix containing the samples.
   2) `threshold`: the critical value. After choosing a (significance) level of α we can use a table showing the t-distribution to read off this value.
   3) `mu0`: the value according to the Null hypothesis.
-  4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of Booleans indicating whether the t-statistic is larger than the critical value.)
+  4) `decision.vect`: an indicator (Boolean) variable. The default value is `FALSE` which means that `my.computeTestDecisions()` should return the fraction of samples where the t-statistic is larger than the critical value. For `decision.vect` equal to `TRUE` the function should return the vector of decisions (a vector of booleans indicating whether the t-statistic is larger than the critical value.)
 
 ```{r}
 #compute rejection rate / estimate the probability of rejecting the null
-my.samMatrix <- my.genSampleMatrix(nReps=2, nSample=20, mu=2, sigma=3)
+my.samMatrix <- my.genSampleMatrix(nReps = 2, nSample = 20, mu = 2, sigma = 3)
 
 #use a significance level of 10 percent. recall this is one-sided testing.
-rejectValue <- qt(0.9,df=19)
+rejectValue <- qt(0.9, df = 19)
+print(paste("critical value:", rejectValue))
 ```
 
-```{r}
-reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0=2, decision.vect=TRUE)
+```{r echo=TRUE}
+reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0 = 2, decision.vect = TRUE)
 reject
 ```
-
-`r ifelse(is.logical(reject), ifelse(reject[1], paste0("Ablehnen!"), paste0("Nicht ablehnen.")), paste(reject))`
-`r if(is.logical(reject)) ifelse(reject[2], paste0("Ablehnen!"), paste0("Nicht ablehnen."))`
 
 #### 2.4.1    Further example: the same function with a larger number of repetitions.
 
 This time we do not specify the argument `decision.vect`. Hence it takes the default value of `FALSE` and returns the fraction of samples where the t-statistic is larger than the critical value. We know that this fraction should be equal to our (significance) level $\alpha$ if the hypothesized $\mu_{0}$ is equal to the true $\mu_{X}$. By increasing the number of repetitions (`nReps`) we may improve the precision of the simulation.
 
-```{r}
-my.samMatrix <- my.genSampleMatrix(nReps=20000, nSample=20, mu=2, sigma=3)
-reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0=2)
+```{r echo=TRUE}
+my.samMatrix <- my.genSampleMatrix(nReps = 20000, nSample = 20, mu = 2, sigma = 3)
+reject <- my.computeTestDecisions(my.samMatrix, threshold = rejectValue, mu0 = 2)
 reject
 ```
-
-`r ifelse(is.logical(reject), ifelse(reject[1], paste0("Ablehnen!"), paste0("Nicht ablehnen.")), paste(reject))`
-`r if(is.logical(reject)) ifelse(reject[2], paste0("Ablehnen!"), paste0("Nicht ablehnen."))`
 
 ### 2.5   Putting it all together.
 
@@ -228,22 +223,22 @@ The arguments are:
   5) `sigma`: (see above) the true $\sigma$ of the population
   6) `mu0`: (see above) the value corresponding to the null hypothesis $H_{0}$
 
-```{r}
+```{r echo=TRUE}
 #now use the powervalue function to compute the probability of rejecting the null for various values
 
 #same as above. H_0 is true. Result should be equal to significance level
 #the precision can be increased by choosing a large nReps-value
-my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=2,sigma=2, mu0=2)
+my.powerValue(nReps = 10000, nSample = 20, threshold = rejectValue, mu = 2, sigma = 2, mu0 = 2)
 ```
 
-```{r}
+```{r echo=TRUE}
 # #now H_0 is false
-my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=2.4,sigma=2, mu0=2)
+my.powerValue(nReps = 10000, nSample = 20, threshold = rejectValue, mu = 2.4, sigma = 2, mu0 = 2)
 ```
 
-```{r}
+```{r echo=TRUE}
 #now H_0 is false
-my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=2.6,sigma=2, mu0=2)
+my.powerValue(nReps = 10000, nSample = 20, threshold = rejectValue, mu = 2.6, sigma = 2, mu0 = 2)
 ```
 
 #### 2.5.1    Plotting
@@ -254,13 +249,13 @@ Now we are done. We can compute the power of the t-test for various values of $\
 
 Compute the power of the t-test $\prod(\mu_{X})$ for $\mu_{X}=2.0, 2.1, 2.2, ...4.0$ and plot the results:
 
-```{r}
+```{r plotting the power of the t-test}
 ## Creating muVect
-muVect <- seq(2,4, by = 0.1)
+muVect <- seq(2, 4, by = 0.1)
 ## Creating powerVect with a sapply function
-powerVect <- sapply(muVect, function(x) my.powerValue(nReps=10000,nSample=20,threshold = rejectValue, mu=x,sigma=2, mu0=2))
+powerVect <- sapply(muVect, function(x) my.powerValue(nReps = 10000, nSample = 20, threshold = rejectValue, mu = x, sigma = 2, mu0 = 2))
 
 
 ## Plotting powerVect and MuVect
-plot(y=powerVect,x=muVect,xlab=expression(mu[X]),ylab=expression(Pi(mu[X]) ), type="b" )
+plot(y = powerVect, x = muVect, xlab = expression(mu[X]), ylab = expression(Pi(mu[X]) ), type = "b", main = "Power of the t-test")
 ```
